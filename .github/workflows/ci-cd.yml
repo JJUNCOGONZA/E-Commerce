@@ -19,7 +19,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'  # o 'zulu' si prefieres Zulu OpenJDK
+          distribution: 'adopt'
           java-version: '17'
 
       - name: List directory structure
@@ -49,11 +49,13 @@ jobs:
           git config --global user.name 'Jeisson Junco'
           git config --global user.email 'jeissonjuncogonzalez@gmail.com'
           git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add .
-          git commit -m "Temporary commit before rebase"
-          git pull origin main --rebase --autostash
-          git add pom.xml
-          git commit -m "Increment version to ${{ env.new_version_product }}"
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+          else
+            git add pom.xml
+            git commit -m "Increment version to ${{ env.new_version_product }}"
+          fi
+          git pull origin main --rebase
           git push origin HEAD:main
 
       - name: Generate changelog for Product Catalog Service
