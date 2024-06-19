@@ -61,7 +61,6 @@ jobs:
       - name: Create initial tag if none exists
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
         run: |
           if [ -z "$(git ls-remote --tags origin | grep refs/tags/v)" ]; then
             git tag v0.0.1
@@ -92,6 +91,11 @@ jobs:
           cd product-catalog
           docker build -t jjuncogonza/product-catalog:${{ env.new_version_product }} .
           docker tag jjuncogonza/product-catalog:${{ env.new_version_product }} jjuncogonza/product-catalog:latest
+
+      - name: Debug Docker Login
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          docker info
 
       - name: Push Docker image
         env:
