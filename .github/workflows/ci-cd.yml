@@ -42,10 +42,14 @@ jobs:
           echo "new_version_product=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Commit and push version increment for Product Catalog Service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd product-catalog
           git config --global user.name 'Jeisson Junco'
           git config --global user.email 'jeissonjuncogonzalez@gmail.com'
+          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git pull origin main --rebase
           git add pom.xml
           git commit -m "Increment version to ${{ env.new_version_product }}"
           git push origin HEAD:main
@@ -55,6 +59,8 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v2
         with:
           configuration: .github/changelog-config.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release for Product Catalog Service
         uses: actions/create-release@v1
