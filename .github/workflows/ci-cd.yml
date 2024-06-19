@@ -58,6 +58,15 @@ jobs:
           git pull origin main --rebase
           git push origin HEAD:main
 
+      - name: Create initial tag if none exists
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git tag)" ]; then
+            git tag v0.0.1
+            git push origin v0.0.1
+          fi
+
       - name: Generate changelog for Product Catalog Service
         id: generate_changelog_product
         uses: mikepenz/release-changelog-builder-action@v2
