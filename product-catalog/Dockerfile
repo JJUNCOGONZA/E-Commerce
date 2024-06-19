@@ -18,7 +18,7 @@ FROM openjdk:17-jdk-slim
 VOLUME /tmp
 
 # Copiar el archivo JAR generado desde la etapa de construcción
-COPY --from=build /app/target/product-catalog-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 # Definir el comando de entrada para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "/app.jar", "--spring.profiles.active=docker"]
