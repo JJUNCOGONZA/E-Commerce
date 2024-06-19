@@ -44,8 +44,8 @@ jobs:
       - name: Commit and push version increment for Product Catalog Service
         run: |
           cd product-catalog
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name 'Jeisson Junco'
+          git config --global user.email 'jeissonjuncogonzalez@gmail.com'
           git add pom.xml
           git commit -m "Increment version to ${{ env.new_version_product }}"
           git push origin HEAD:main
