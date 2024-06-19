@@ -22,13 +22,18 @@ jobs:
           distribution: 'adopt'  # o 'zulu' si prefieres Zulu OpenJDK
           java-version: '17'
 
+      - name: List directory structure
+        run: ls -al
+
       - name: Build and Test Order Service
         run: |
+          ls -al order
           cd order
           mvn clean install
 
       - name: Build and Test Product Catalog Service
         run: |
+          ls -al product-catalog
           cd product-catalog
           mvn clean install
 
