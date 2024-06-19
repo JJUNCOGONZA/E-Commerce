@@ -48,7 +48,7 @@ jobs:
           cd product-catalog
           git config --global user.name 'Jeisson Junco'
           git config --global user.email 'jeissonjuncogonzalez@gmail.com'
-          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/JJUNCOGONZA/E-Commerce
           if git diff-index --quiet HEAD --; then
             echo "No changes to commit"
           else
@@ -89,8 +89,8 @@ jobs:
       - name: Build Docker image
         run: |
           cd product-catalog
-          docker build -t jjuncogonza/product-catalog:${{ env.new_version_product }} .
-          docker tag jjuncogonza/product-catalog:${{ env.new_version_product }} jjuncogonza/product-catalog:latest
+          docker build -t ja5on96/product-catalog:${{ env.new_version_product }} .
+          docker tag ja5on96/product-catalog:${{ env.new_version_product }} ja5on96/product-catalog:latest
 
       - name: Login to Docker Hub
         env:
@@ -107,5 +107,5 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker push jjuncogonza/product-catalog:${{ env.new_version_product }}
-          docker push jjuncogonza/product-catalog:latest
+          docker push ja5on96/product-catalog:${{ env.new_version_product }}
+          docker push ja5on96/product-catalog:latest
