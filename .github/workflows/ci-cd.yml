@@ -22,86 +22,53 @@ jobs:
           distribution: 'adopt'  # o 'zulu' si prefieres Zulu OpenJDK
           java-version: '17'
 
-      - name: Verify directory structure
-        run: ls -al  # Verificar la estructura de directorios
-
       - name: Build and Test Order Service
         run: |
-          if [ -d "./order" ]; then
-            cd order
-            mvn clean install
-          else
-            echo "Directory 'order' does not exist."
-            exit 1
-          fi
+          cd order
+          mvn clean install
 
       - name: Build and Test Product Catalog Service
         run: |
-          if [ -d "./product-catalog" ]; then
-            cd product-catalog
-            mvn clean install
-          else
-            echo "Directory 'product-catalog' does not exist."
-            exit 1
-          fi
+          cd product-catalog
+          mvn clean install
 
       - name: Increment version for Order Service
         id: increment_version_order
         run: |
-          if [ -d "./order" ]; then
-            cd order
-            CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-            NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF++;print}')
-            echo "New version: $NEW_VERSION"
-            mvn versions:set -DnewVersion=$NEW_VERSION
-            echo "new_version_order=$NEW_VERSION" >> $GITHUB_ENV
-          else
-            echo "Directory 'order' does not exist."
-            exit 1
-          fi
+          cd order
+          CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF++;print}')
+          echo "New version: $NEW_VERSION"
+          mvn versions:set -DnewVersion=$NEW_VERSION
+          echo "new_version_order=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Increment version for Product Catalog Service
         id: increment_version_product
         run: |
-          if [ -d "./product-catalog" ]; then
-            cd product-catalog
-            CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-            NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF++;print}')
-            echo "New version: $NEW_VERSION"
-            mvn versions:set -DnewVersion=$NEW_VERSION
-            echo "new_version_product=$NEW_VERSION" >> $GITHUB_ENV
-          else
-            echo "Directory 'product-catalog' does not exist."
-            exit 1
-          fi
+          cd product-catalog
+          CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF++;print}')
+          echo "New version: $NEW_VERSION"
+          mvn versions:set -DnewVersion=$NEW_VERSION
+          echo "new_version_product=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Commit and push version increment for Order Service
         run: |
-          if [ -d "./order" ]; then
-            cd order
-            git config --global user.name 'github-actions'
-            git config --global user.email 'github-actions@github.com'
-            git add pom.xml
-            git commit -m "Increment version to ${{ env.new_version_order }}"
-            git push origin HEAD:main
-          else
-            echo "Directory 'order' does not exist."
-            exit 1
-          fi
+          cd order
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add pom.xml
+          git commit -m "Increment version to ${{ env.new_version_order }}"
+          git push origin HEAD:main
 
       - name: Commit and push version increment for Product Catalog Service
         run: |
-          if [ -d "./product-catalog" ]; then
-            cd product-catalog
-            git config --global user.name 'github-actions'
-            git config --global user.email 'github-actions@github.com'
-            git add pom.xml
-            git commit -m "Increment version to ${{ env.new_version_product }}"
-            git push origin HEAD:main
-          else
-            echo "Directory 'product-catalog' does not exist."
-            exit 1
-          fi
+          cd product-catalog
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add pom.xml
+          git commit -m "Increment version to ${{ env.new_version_product }}"
+          git push origin HEAD:main
 
       - name: Generate changelog for Order Service
         id: generate_changelog_order
