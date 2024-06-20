@@ -37,7 +37,6 @@ The project will use LocalStack to simulate a DynamoDB environment. Two microser
 
 2. **Order Microservice:**
    - Performs the creation function detailed in step 4.
-   - Integrates with the product service via REST API.
 
 ## Execution Instructions
 
