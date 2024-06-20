@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ecommerce</groupId>
     <artifactId>product-catalog</artifactId>
-    <version>0.0.11</version>
+    <version>0.0.12</version>
     <name>Product Catalog Service</name>
     <description>Service for managing the product catalog</description>
     <packaging>jar</packaging>
