@@ -24,6 +24,15 @@ services:
     ports:
       - "8089:8089"
 
+  order:
+    build: ./order
+    depends_on:
+      - localstack
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8090:8090"
+      
 volumes:
   localstack_data:
     driver: local
