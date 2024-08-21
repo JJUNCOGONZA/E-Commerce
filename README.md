@@ -1,4 +1,4 @@
-# E-Commerce LINKTIC
+# E-Commerce
 
 
 ### 1. App Planning (Architecture)
